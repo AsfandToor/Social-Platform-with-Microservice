@@ -9,7 +9,7 @@ import (
 )
 
 func main() {
-	listenAddress := flag.String("listen-address", ":3000", "The address to listen on for HTTP requests.")
+	listenAddress := flag.String("port", ":3001", "The address to listen on for HTTP requests.")
 	println("Starting server on port", *listenAddress)
 	log.Fatal(http.ListenAndServe((*listenAddress), router.Router()))
 }

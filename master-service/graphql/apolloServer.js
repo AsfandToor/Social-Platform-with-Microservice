@@ -1,21 +1,21 @@
-const { ApolloServer } = require("apollo-server-express");
-const { readFileSync } = require("fs");
+const { ApolloServer } = require('apollo-server-express')
+const { readFileSync } = require('fs')
 
-const { chatResolver } = require("../resolvers/chat.resolver")
+const { chatResolver } = require('../resolvers/chatResolver')
 
-const typeDefs = readFileSync("./graphql/schema.gql", "UTF-8");
+const typeDefs = readFileSync('./graphql/schema.gql', 'UTF-8')
 
-const resolvers = [ chatResolver ]
+const resolvers = [chatResolver]
 
 const startApolloServer = async (app) => {
-    const server = new ApolloServer({
-        typeDefs,
-        resolvers
-    });
+  const server = new ApolloServer({
+    typeDefs,
+    resolvers
+  })
 
-    await server.start();
+  await server.start()
 
-    server.applyMiddleware({ app });
+  server.applyMiddleware({ app })
 }
 
-module.exports = { startApolloServer };
+module.exports = { startApolloServer }

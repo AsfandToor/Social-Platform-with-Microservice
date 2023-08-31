@@ -15,4 +15,5 @@ type Chat {
 
 type Query {
     getChatById(id: ID!): Chat
+    getAllChats(userId: ID!): [Chat]
 }
