@@ -1,0 +1,18 @@
+type Message {
+    _id: ID
+    message: String
+    author: String
+    time: String
+    chat: Chat
+}
+
+type Chat {
+    _id: ID
+    name: String
+    users: [String]
+    messages: [Message]  
+}
+
+type Query {
+    getChatById(id: ID!): Chat
+}
