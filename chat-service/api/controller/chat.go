@@ -126,13 +126,13 @@ func UpdateChat(w http.ResponseWriter, r *http.Request) {
 		},
 	}
 
-	result, err := collection.UpdateOne(r.Context(), filter, update)
+	_, err = collection.UpdateOne(r.Context(), filter, update)
 
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	json.NewEncoder(w).Encode(result)
+	json.NewEncoder(w).Encode(true)
 }
 
 func DeleteChat(w http.ResponseWriter, r *http.Request) {
@@ -149,13 +149,33 @@ func DeleteChat(w http.ResponseWriter, r *http.Request) {
 
 	filter := bson.M{"_id": objectId}
 
-	collection := db.GetCollection("social", "chat")
+	chatCollection := db.GetCollection("social", "chat")
+	msgCollection := db.GetCollection("social", "message")
 
-	result, err := collection.DeleteOne(r.Context(), filter)
+	var chat bson.M
+
+	result := chatCollection.FindOne(r.Context(), filter)
+
+	if err := result.Decode(&chat); err != nil {
+		fmt.Println(err)
+		json.NewEncoder(w).Encode("Invalid Data")
+		return
+	}
+
+	messageIds := chat["messages"].(primitive.A)
+
+	for _, id := range messageIds {
+		if err != nil {
+			log.Fatal(err)
+		}
+		msgCollection.DeleteOne(r.Context(), bson.M{"_id": id})
+	}
+
+	_, err = chatCollection.DeleteOne(r.Context(), filter)
 
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	json.NewEncoder(w).Encode(result)
+	json.NewEncoder(w).Encode(true)
 }

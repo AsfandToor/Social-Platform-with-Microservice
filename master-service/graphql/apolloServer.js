@@ -12,9 +12,7 @@ const startApolloServer = async (app) => {
     typeDefs,
     resolvers
   })
-
   await server.start()
-
   server.applyMiddleware({ app })
 }
 

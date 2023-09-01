@@ -71,7 +71,7 @@ func CreateMessage(w http.ResponseWriter, r *http.Request) {
 		panic(err)
 	}
 
-	json.NewEncoder(w).Encode(result)
+	json.NewEncoder(w).Encode(true)
 }
 
 func UpdateMessage(w http.ResponseWriter, r *http.Request) {
@@ -96,9 +96,9 @@ func UpdateMessage(w http.ResponseWriter, r *http.Request) {
 		panic(err)
 	}
 
-	result := collection.FindOneAndUpdate(r.Context(), filter, bson.M{"$set": message})
+	collection.FindOneAndUpdate(r.Context(), filter, bson.M{"$set": message})
 
-	json.NewEncoder(w).Encode(result)
+	json.NewEncoder(w).Encode(true)
 }
 
 func DeleteMessage(w http.ResponseWriter, r *http.Request) {
@@ -136,5 +136,5 @@ func DeleteMessage(w http.ResponseWriter, r *http.Request) {
 
 	msgCollection.DeleteOne(r.Context(), filter)
 
-	json.NewEncoder(w).Encode(result)
+	json.NewEncoder(w).Encode(true)
 }

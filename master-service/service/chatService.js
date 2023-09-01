@@ -18,8 +18,18 @@ const createChat = async (data) => {
   return response.data
 }
 
+const createMessage = async (data) => {
+  const response = await axios.post(`${BASE_URL}/api/messages`, data)
+  return response.data
+}
+
 const updateChat = async (id, data) => {
-  const response = await axios.put(`${BASE_URL}/api/chats/${id}`, data)
+  const response = await axios.put(`${BASE_URL}/api/chats/${id}`, { name: data })
+  return response.data
+}
+
+const updateMessage = async (id, data) => {
+  const response = await axios.put(`${BASE_URL}/api/messages/${id}`, { message: data })
   return response.data
 }
 
@@ -28,4 +38,9 @@ const deleteChat = async (id) => {
   return response.data
 }
 
-module.exports = { getAllChats, getChatById, createChat, updateChat, deleteChat }
+const deleteMessage = async (id) => {
+  const response = await axios.delete(`${BASE_URL}/api/messages/${id}`)
+  return response.data
+}
+
+module.exports = { getAllChats, getChatById, createChat, updateChat, deleteChat, createMessage, updateMessage, deleteMessage }

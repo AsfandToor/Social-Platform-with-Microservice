@@ -1,4 +1,13 @@
-const { getAllChats, getChatById, createChat, updateChat } = require('../service/chatService')
+const {
+  getAllChats,
+  getChatById,
+  createMessage,
+  createChat,
+  updateChat,
+  updateMessage,
+  deleteChat,
+  deleteMessage
+} = require('../service/chatService')
 
 const chatResolver = {
   Query: {
@@ -15,8 +24,24 @@ const chatResolver = {
       const response = await createChat(createChatInput)
       return response
     },
+    createMessage: async (_, { createMessageInput }) => {
+      const response = await createMessage(createMessageInput)
+      return response
+    },
     updateChat: async (_, { chatId, name }) => {
       const response = await updateChat(chatId, name)
+      return response
+    },
+    updateMessage: async (_, { messageId, message }) => {
+      const response = await updateMessage(messageId, message)
+      return response
+    },
+    deleteMessage: async (_, { messageId }) => {
+      const response = await deleteMessage(messageId)
+      return response
+    },
+    deleteChat: async (_, { chatId }) => {
+      const response = await deleteChat(chatId)
       return response
     }
   }

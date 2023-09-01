@@ -22,7 +22,17 @@ input CreateChatInput {
     name: String
 }
 
+input CreateMessageInput {
+    message: String
+    author: String
+    chat: ID
+}
+
 type Mutation {
     createChat(createChatInput: CreateChatInput!): Boolean
+    createMessage(createMessageInput: CreateMessageInput!): Boolean
     updateChat(chatId: ID!, name: String!): Boolean 
+    updateMessage(messageId: ID!, message: String!): Boolean
+    deleteChat(chatId: ID!): Boolean
+    deleteMessage(messageId: ID!): Boolean
 }
