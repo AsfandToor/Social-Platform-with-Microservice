@@ -13,4 +13,19 @@ const getAllChats = async () => {
   return response.data
 }
 
-module.exports = { getAllChats, getChatById }
+const createChat = async (data) => {
+  const response = await axios.post(`${BASE_URL}/api/chats`, data)
+  return response.data
+}
+
+const updateChat = async (id, data) => {
+  const response = await axios.put(`${BASE_URL}/api/chats/${id}`, data)
+  return response.data
+}
+
+const deleteChat = async (id) => {
+  const response = await axios.delete(`${BASE_URL}/api/chats/${id}`)
+  return response.data
+}
+
+module.exports = { getAllChats, getChatById, createChat, updateChat, deleteChat }

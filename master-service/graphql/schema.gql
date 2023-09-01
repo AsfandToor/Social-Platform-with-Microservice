@@ -17,3 +17,12 @@ type Query {
     getChatById(id: ID!): Chat
     getAllChats(userId: ID!): [Chat]
 }
+
+input CreateChatInput {
+    name: String
+}
+
+type Mutation {
+    createChat(createChatInput: CreateChatInput!): Boolean
+    updateChat(chatId: ID!, name: String!): Boolean 
+}

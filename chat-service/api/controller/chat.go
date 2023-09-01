@@ -83,13 +83,13 @@ func CreateChat(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	result, err := collection.InsertOne(r.Context(), chat)
+	_, err := collection.InsertOne(r.Context(), chat)
 
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	json.NewEncoder(w).Encode(result)
+	json.NewEncoder(w).Encode(true)
 }
 
 func UpdateChat(w http.ResponseWriter, r *http.Request) {
