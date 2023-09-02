@@ -4,7 +4,7 @@ import {
   UploadApiResponse,
   UploadApiErrorResponse,
 } from 'cloudinary';
-import streamifier from 'streamifier';
+import * as streamifier from 'streamifier';
 
 type CloudinaryResponse = UploadApiResponse | UploadApiErrorResponse;
 
@@ -18,8 +18,16 @@ export class CloudinaryService {
           resolve(result);
         },
       );
-
       streamifier.createReadStream(file.buffer).pipe(uploadStream);
+    });
+  }
+
+  deleteFile(publicId: string): Promise<CloudinaryResponse> {
+    return new Promise<CloudinaryResponse>((resolve, reject) => {
+      cloudinary.uploader.destroy(publicId, (error, result) => {
+        if (error) return reject(error);
+        resolve(result);
+      });
     });
   }
 }

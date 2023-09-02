@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model, PaginateModel, Types } from 'mongoose';
 import { Post, PostDocument } from 'src/schemas/post.schema';
 import { CreatePostDto, UpdatePostDto } from './post.dto';
+import { CloudinaryService } from '../cloudinary/cloudinary.service';
 
 @Injectable()
 export class PostService {
@@ -11,6 +12,7 @@ export class PostService {
     private readonly postModel: Model<PostDocument>,
     @InjectModel(Post.name)
     private readonly postPModel: PaginateModel<PostDocument>,
+    private readonly cloudinaryService: CloudinaryService,
   ) {}
 
   async fetch(query: { limit: number; page: number }) {
@@ -56,7 +58,17 @@ export class PostService {
 
   async delete(id: string) {
     try {
+      const post = await this.postModel.findById(id);
+      if (!post) throw new Error('Post not found');
+
+      const imagePromises = post.images.map((image) =>
+        this.cloudinaryService.deleteFile(image.public_id),
+      );
+
+      await Promise.all(imagePromises);
+
       const response = await this.postModel.findByIdAndDelete(id);
+
       return response;
     } catch (error) {
       console.log(error);
