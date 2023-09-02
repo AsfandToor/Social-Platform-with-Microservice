@@ -1,3 +1,5 @@
+scalar Upload
+
 type Message {
     _id: ID
     message: String
@@ -11,6 +13,30 @@ type Chat {
     name: String
     users: [String]
     messages: [Message]  
+}
+
+type Image {
+    url: String,
+    public_id: String
+}
+
+type Comment {
+    comment: String
+    author: String
+    post: Post
+    createdAt: String
+    updatedAt: String
+}
+
+
+type Post {
+    _id: ID
+    caption: String
+    author: String
+    comments: [Comment]
+    images: [Image]
+    createdAt: String
+    updatedAt: String
 }
 
 type Query {
@@ -28,9 +54,16 @@ input CreateMessageInput {
     chat: ID
 }
 
+input CreatePostInput {
+    caption: String
+    author: String
+    images: [String]
+}
+
 type Mutation {
     createChat(createChatInput: CreateChatInput!): Boolean
     createMessage(createMessageInput: CreateMessageInput!): Boolean
+    createPost(createPostInput: CreatePostInput): Post
     updateChat(chatId: ID!, name: String!): Boolean 
     updateMessage(messageId: ID!, message: String!): Boolean
     deleteChat(chatId: ID!): Boolean

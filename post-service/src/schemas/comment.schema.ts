@@ -4,7 +4,10 @@ import * as mongoosePaginate from 'mongoose-paginate-v2';
 
 export type CommentDocument = HydratedDocument<Comment>;
 
-@Schema()
+@Schema({
+  timestamps: true,
+  versionKey: false,
+})
 export class Comment {
   @Prop()
   comment: string;

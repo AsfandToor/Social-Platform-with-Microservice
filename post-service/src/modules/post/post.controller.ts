@@ -45,6 +45,7 @@ export class PostController {
   @Post('uploads')
   @UseInterceptors(FilesInterceptor('files', 3))
   async upload(@UploadedFiles() files: Express.Multer.File[]) {
+    console.log(files);
     const filePromise = files.map((file) =>
       this.cloudinaryService.uploadFile(file),
     );
