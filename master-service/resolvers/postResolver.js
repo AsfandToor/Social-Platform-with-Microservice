@@ -1,12 +1,16 @@
-const { createPost } = require('../service/postService')
+const { createPost, getPosts } = require("../service/postService");
 
 const postResolver = {
-  Query: {},
+  Query: {
+    getPosts: async (_, { id }) => {
+      return await getPosts(id);
+    },
+  },
   Mutation: {
     createPost: async (_, { createPostInput }) => {
-      return await createPost(createPostInput)
-    }
-  }
-}
+      return await createPost(createPostInput);
+    },
+  },
+};
 
-module.exports = { postResolver }
+module.exports = { postResolver };

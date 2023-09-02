@@ -42,6 +42,17 @@ type Post {
 type Query {
     getChatById(id: ID!): Chat
     getAllChats(userId: ID!): [Chat]
+    getPosts(id:ID!): [PostWithPagination]
+}
+
+type PostWithPagination {
+    docs: [Post]
+    totalDocs: Int
+    limit: Int
+    totalPages: Int
+    page: Int
+    hasPrevPage: Boolean
+    hasNextPage: Boolean
 }
 
 input CreateChatInput {

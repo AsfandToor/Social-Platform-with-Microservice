@@ -4,6 +4,11 @@ require('dotenv').config()
 
 const BASE_URL = process.env.POST_SERVICE_URL
 
+const getPosts = async (id) => {
+  const response = await axios.get(`${BASE_URL}/post`)
+  return response.data
+}
+
 const uploadImage = async (files) => {
   const formData = new FormData()
   files.forEach((file, index) => {
@@ -29,4 +34,4 @@ const createPost = async (createPostInput) => {
   return response.data
 }
 
-module.exports = { createPost, uploadImage }
+module.exports = { createPost, uploadImage, getPosts }
