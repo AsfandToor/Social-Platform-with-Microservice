@@ -13,11 +13,13 @@ export class Post {
   caption: string;
 
   @Prop({
-    ref: 'Comment',
+    ref: 'User',
   })
   author: Types.ObjectId;
 
-  @Prop()
+  @Prop({
+    ref: 'Comment',
+  })
   comments: Types.ObjectId[];
 
   @Prop({

@@ -1,7 +1,7 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const http = require('http')
-const { startApolloServer } = require('./graphql/apolloServer')
+const { startApolloServer } = require('./graphql/apolloServer.js')
 require('dotenv').config()
 
 const app = express()
