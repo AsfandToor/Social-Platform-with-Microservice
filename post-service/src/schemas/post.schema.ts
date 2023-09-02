@@ -20,8 +20,18 @@ export class Post {
   @Prop()
   comments: Types.ObjectId[];
 
-  @Prop()
-  images: string[];
+  @Prop({
+    type: [
+      {
+        url: { type: String },
+        public_id: { type: String },
+      },
+    ],
+  })
+  images: {
+    url: string;
+    public_id: string;
+  }[];
 }
 export const PostSchema = SchemaFactory.createForClass(Post);
 PostSchema.plugin(mongoosePaginate);

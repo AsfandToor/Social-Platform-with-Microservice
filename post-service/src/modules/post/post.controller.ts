@@ -7,13 +7,20 @@ import {
   Put,
   Query,
   Delete,
+  UploadedFiles,
+  UseInterceptors,
 } from '@nestjs/common';
 import { PostService } from './post.service';
 import { CreatePostDto } from './post.dto';
+import { FilesInterceptor } from '@nestjs/platform-express';
+import { CloudinaryService } from '../cloudinary/cloudinary.service';
 
 @Controller('post')
 export class PostController {
-  constructor(private readonly postService: PostService) {}
+  constructor(
+    private readonly postService: PostService,
+    private readonly cloudinaryService: CloudinaryService,
+  ) {}
 
   @Get()
   fetch(@Query() query: { limit: number; page: number }) {
@@ -33,5 +40,20 @@ export class PostController {
   @Delete(':id')
   delete(@Param('id') id: string) {
     return this.postService.delete(id);
+  }
+
+  @Post('uploads')
+  @UseInterceptors(FilesInterceptor('files', 3))
+  async upload(@UploadedFiles() files: Express.Multer.File[]) {
+    const filePromise = files.map((file) =>
+      this.cloudinaryService.uploadFile(file),
+    );
+
+    const uploadedFiles = await Promise.all(filePromise);
+
+    return uploadedFiles.map((file) => ({
+      url: file.url,
+      public_id: file.public_id,
+    }));
   }
 }
