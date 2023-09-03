@@ -1,15 +1,23 @@
 import React from 'react'
 import { BsPostcardHeart } from "react-icons/bs";
-import { TbLogout2 } from "react-icons/tb";
 import { BiHomeAlt } from "react-icons/bi";
 import { PiPaperPlaneTilt } from "react-icons/pi";
+import { TbLogout2 } from "react-icons/tb";
+
 import { useState } from "react";
+import { useAtom } from 'jotai';
+import { Seen } from '../page';
 
 const SideNav = () => {
-   const [navBar, setNav] = useState(false);
-    const setNavBar = () => {
-        setNav(!navBar);
-        };
+  const [seen, setSeen] = useAtom(Seen);
+  const togglePop = () => {
+    setSeen(!seen);
+  };
+
+  const [navBar, setNav] = useState(false);
+  const setNavBar = () => {
+    setNav(!navBar);
+  };
   return (
     <div className=" bg-[color:var(--background-start-rgb)] h-[100%]  flex flex-col align-center w-[100%] xl:w-[15%] p-4 xl:fixed z-[10000]  border-r-[1px] border-r-white">
       <div className=" w-[100%] ">
@@ -41,7 +49,7 @@ const SideNav = () => {
           onClick={setNavBar}
         >
           <BsPostcardHeart className="inline" />
-          <h1 className="ml-3 inline-block">New Post</h1>
+          <h1 className="ml-3 inline-block" onClick={togglePop} >New Post</h1>
         </a>
       </div>
       <div className="absolute bottom-0">
