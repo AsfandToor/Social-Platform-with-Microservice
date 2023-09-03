@@ -4,8 +4,8 @@ require('dotenv').config()
 
 const BASE_URL = process.env.POST_SERVICE_URL
 
-const getPosts = async (id) => {
-  const response = await axios.get(`${BASE_URL}/post`)
+const getPosts = async (page, limit) => {
+  const response = await axios.get(`${BASE_URL}/post?page=${page}&limit=${limit}`)
   return response.data
 }
 
@@ -34,4 +34,14 @@ const createPost = async (createPostInput) => {
   return response.data
 }
 
-module.exports = { createPost, uploadImage, getPosts }
+const updatePost = async (postId, updatePostInput) => {
+  const response = await axios.put(`${BASE_URL}/post/${postId}`, { ...updatePostInput })
+  return response.data
+}
+
+const deletePost = async (postId) => {
+  const response = await axios.delete(`${BASE_URL}/post/${postId}`)
+  return response.data
+}
+
+module.exports = { createPost, uploadImage, getPosts, updatePost, deletePost }

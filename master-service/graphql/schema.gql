@@ -39,12 +39,6 @@ type Post {
     updatedAt: String
 }
 
-type Query {
-    getChatById(id: ID!): Chat
-    getAllChats(userId: ID!): [Chat]
-    getPosts(id:ID!): [PostWithPagination]
-}
-
 type PostWithPagination {
     docs: [Post]
     totalDocs: Int
@@ -71,12 +65,24 @@ input CreatePostInput {
     images: [String]
 }
 
+input UpdatePostInput {
+    caption: String
+}
+
+type Query {
+    getChatById(id: ID!): Chat
+    getAllChats(userId: ID!): [Chat]
+    getPosts(page: String!, limit: String!): PostWithPagination
+}
+
 type Mutation {
     createChat(createChatInput: CreateChatInput!): Boolean
     createMessage(createMessageInput: CreateMessageInput!): Boolean
     createPost(createPostInput: CreatePostInput): Post
     updateChat(chatId: ID!, name: String!): Boolean 
     updateMessage(messageId: ID!, message: String!): Boolean
+    updatePost(postId: ID!, updatePostInput: UpdatePostInput!): Post
     deleteChat(chatId: ID!): Boolean
     deleteMessage(messageId: ID!): Boolean
+    deletePost(postId: ID!): Post
 }
