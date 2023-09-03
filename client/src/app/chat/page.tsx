@@ -166,6 +166,16 @@ export default function page() {
   }
   
   
+  const HandleOnChatClick = (id: number) => {
+    const clickedUser = data.find((user) => user.id === id);
+
+    if (clickedUser) {
+      setCurrChat({
+        name: clickedUser.username,
+        img_url: clickedUser.img_url
+      });
+    }
+  }
 
   
   return (
@@ -175,7 +185,7 @@ export default function page() {
         <div className="p-2">
           {data.map((elem)=>{
              return (
-              <SingleChatDisplay img_url={elem.img_url} name={elem.username}/>
+              <SingleChatDisplay key={elem.id} img_url={elem.img_url} name={elem.username} onClick={() => HandleOnChatClick(elem.id)}/>
              )
           })}
         </div>
@@ -188,7 +198,7 @@ export default function page() {
         <div className="h-[80%] p-2 overflow-y-auto">
           {chat.messages.map((msg) => {
             return (
-              <Message isUserSender={msg.userId === current_uid} message = {msg.text}/>
+              <Message key={msg.messageId} isUserSender={msg.userId === current_uid} message = {msg.text}/>
             )
           })}
         </div>
