@@ -27,3 +27,17 @@ body {
     rgb(var(--background-start-rgb));
     font-family: 'Poppins', sans-serif;
 }
+
+::-webkit-scrollbar {
+  width: 3px;/* Customize the scrollbar width */
+}
+
+::-webkit-scrollbar-track {
+  background: none; 
+}
+
+::-webkit-scrollbar-thumb {
+  background: #fff;/* Customize the scrollbar thumb */
+  border-radius: 16px;/* Track color *//* Customize the scrollbar track */
+
+}
