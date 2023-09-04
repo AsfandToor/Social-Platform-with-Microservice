@@ -1,39 +1,101 @@
 "use client";
-import React from "react";
-import { useState } from "react";
-import {atom,useAtom } from "jotai";
+import React, { useEffect, useState } from "react";
+
+import apolloClient from "@/app/graphql/client";
+import { useLazyQuery } from "@apollo/client";
+import { GET_POSTS } from "@/app/graphql/query/post";
+
+import { useAtom } from "jotai";
+import { Seen } from "../atoms/atoms";
+
+import InfiniteScroll from "react-infinite-scroll-component";
 import SideNav from "./components/sideNav";
 import Postcard from "./components/postcard";
 import CreatePost from "./components/createPost";
-import post from "../DemoData/post.js";
 import BottomNav from "./components/bottomNav";
+import Skeleton from "./components/skeleton";
 
-export const Seen = atom(false);
+import { PagiantedPosts, Post } from "@/app/types/post";
+
 const Page = () => {
+  const [seen, setSeen] = useAtom(Seen);
+  const [posts, setPosts] = useState<PagiantedPosts>();
+  const [loadPosts, { data, called, loading, error }] = useLazyQuery(
+    GET_POSTS,
+    {
+      client: apolloClient,
+      initialFetchPolicy: "network-only",
+      fetchPolicy: "network-only",
+    }
+  );
 
-    const [seen, setSeen] = useAtom(Seen);
-  
+  useEffect(() => {
+    loadPosts({
+      variables: {
+        limit: "2",
+        page: "1",
+      },
+      onCompleted: (data) => {
+        setPosts(data.getPosts);
+      }
+    });
+  }, []);
+
   return (
     <div className="flex w-full ">
-          <div className="hidden xl:block">
-                <SideNav></SideNav>
+      <div className="hidden xl:block">
+        <SideNav></SideNav>
+      </div>
+      <BottomNav></BottomNav>
+      <div className="w-[100%] xl:w-[85%]  ">
+        {seen ? <CreatePost></CreatePost> : null}
+        {!called || loading ? (
+          <div className="flex flex-col items-center mt-11">
+            <Skeleton />
           </div>
-
-            <BottomNav></BottomNav>
-          
-          <div className="w-[100%] xl:w-[85%]  ">
-              {seen ? (<CreatePost></CreatePost>):null }
-        <div className="flex flex-col items-center mt-11">
-          {post.map((post) => (
-            <Postcard
-              user={post.user}
-              img={post.img}
-              caption={post.caption}
-              likes={post.likes}
-              comments={post.comments}
-            />
-          ))}
-        </div>
+        ) : (
+          <InfiniteScroll
+            className="flex flex-col items-center mt-11"
+            dataLength={posts?.docs.length || 0}
+            next={async () => {
+              const response = await loadPosts({
+                variables: {
+                  limit: "2",
+                  page: ((posts?.page || 0) + 1).toString(),
+                },
+              });
+              const newPosts = response.data.getPosts as PagiantedPosts;
+              setPosts({
+                docs: [...posts!.docs, ...newPosts.docs],
+                limit: newPosts.limit,
+                page: newPosts.page,
+                totalDocs: newPosts.totalDocs,
+                totalPages: newPosts.totalPages,
+                hasNextPage: newPosts.hasNextPage,
+                hasPrevPage: newPosts.hasPrevPage,
+              })
+            }}
+            hasMore={posts?.hasNextPage || false}
+            loader={<Skeleton />}
+            endMessage={
+              <p style={{ textAlign: "center" }}>
+                <b>Yay! You have seen it all</b>
+              </p>
+            }
+          >
+            {posts?.docs.map((post: Post) => (
+              <Postcard
+                key={post._id}
+                user={"User"}
+                img={post.images?.[0]?.url || "https://picsum.photos/470/350"}
+                caption={post.caption}
+                likes={12}
+                comments={2}
+              />
+            ))}
+          </InfiniteScroll>
+        )}
+        
       </div>
     </div>
   );

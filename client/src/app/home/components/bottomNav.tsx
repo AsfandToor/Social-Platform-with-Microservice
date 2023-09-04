@@ -2,7 +2,7 @@ import React from 'react'
 import { BsPostcardHeart } from "react-icons/bs";
 import { BiHomeAlt } from "react-icons/bi";
 import { PiPaperPlaneTilt } from "react-icons/pi";
-import { Seen } from '../page';
+import { Seen } from '@/app/atoms/atoms';
 import { useAtom } from 'jotai';
 
 const BottomNav = () => {

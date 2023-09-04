@@ -1,7 +1,7 @@
 import React from 'react'
 import { IoMdClose } from 'react-icons/io'
 import { useAtom } from 'jotai'
-import { Seen } from '../page'
+import { Seen } from '@/app/atoms/atoms'
 
 const CreatePost = () => {
   const [seen, setSeen] = useAtom(Seen);

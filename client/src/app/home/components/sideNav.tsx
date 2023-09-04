@@ -1,12 +1,13 @@
 import React from 'react'
+import { useState } from "react";
+
+import { useAtom } from 'jotai';
+import { Seen } from '@/app/atoms/atoms';
+
 import { BsPostcardHeart } from "react-icons/bs";
 import { BiHomeAlt } from "react-icons/bi";
 import { PiPaperPlaneTilt } from "react-icons/pi";
 import { TbLogout2 } from "react-icons/tb";
-
-import { useState } from "react";
-import { useAtom } from 'jotai';
-import { Seen } from '../page';
 
 const SideNav = () => {
   const [seen, setSeen] = useAtom(Seen);
@@ -54,7 +55,6 @@ const SideNav = () => {
       </div>
       <div className="absolute bottom-0">
         <button
-          href="#"
           className="block text-xl font-bold text-white p-6 hover:cursor-pointer "
         >
           {" "}
