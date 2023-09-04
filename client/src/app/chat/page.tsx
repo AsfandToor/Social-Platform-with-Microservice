@@ -4,7 +4,7 @@ import { useState } from "react";
 import Message from "./components/Message"
 import SingleChatDisplay from "./components/SingleChatDisplay"
 
-export default function page() {
+export default function Page() {
   
   const data = [{
     "id": 1,
@@ -53,11 +53,6 @@ export default function page() {
     name: "gstebbing0",
     img_url: "https://robohash.org/officiisestquidem.png?size=50x50&set=set1"
   });
-
-  // setCurrChat({
-  //   name: "gstebbing0",
-  //   img_url: "https://robohash.org/officiisestquidem.png?size=50x50&set=set1"
-  // })
 
   const chat = {
     "chatId": "chat-12345",
