@@ -5,10 +5,7 @@ import Message from "./components/Message";
 import SingleChatDisplay from "./components/SingleChatDisplay";
 
 export default function Page() {
-<<<<<<< Updated upstream
   
-=======
->>>>>>> Stashed changes
   const data = [{
     "id": 1,
     "username": "gstebbing0",
