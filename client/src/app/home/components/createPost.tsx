@@ -10,7 +10,7 @@ import apolloClient from "@/app/graphql/client";
 const CreatePost = () => {
   const [imageUrl, setImageUrl] = useState("");
   const [caption, setCaption] = useState("");
-  const [author, setAuthor] = useState("Abdullah");
+  const [author, setAuthor] = useState("");
   const [image, setImage] = useState("");
 
   const [createPost] = useMutation(Create_Post_Mutation, {
@@ -41,7 +41,6 @@ const CreatePost = () => {
     
     const jsonObject = {
       caption,
-      author,
       images: [image],
     };
 
