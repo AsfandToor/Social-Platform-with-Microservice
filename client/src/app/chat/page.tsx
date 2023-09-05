@@ -5,7 +5,6 @@ import Message from "./components/Message";
 import SingleChatDisplay from "./components/SingleChatDisplay";
 
 export default function Page() {
-  
   const data = [{
     "id": 1,
     "username": "gstebbing0",
@@ -51,8 +50,7 @@ export default function Page() {
   const current_uid = "user-1";
   const [currChat, setCurrChat] = useState({
     name: "gstebbing0",
-    img_url:
-      "https://robohash.org/officiisestquidem.png?size=50x50&set=set1",
+    img_url: "https://robohash.org/officiisestquidem.png?size=50x50&set=set1",
   });
 
   const chat = {
@@ -174,8 +172,8 @@ export default function Page() {
 
   return (
     <div className="grid grid-cols-4 text-center bg-black text-white min-h-screen">
-      <div className="h-screen col-span-1 border-2 overflow-y-auto bg-gray-800">
-        <h1 className="text-2xl mt-2">Messages</h1>
+      <div className="h-screen col-span-1 border-b border-gray-400 overflow-y-auto bg-black">
+        <h1 className="text-2xl mt-2 border-b border-gray-600 py-2">Messages</h1>
         <div className="p-2">
           {data.map((elem) => {
             return (
@@ -190,7 +188,7 @@ export default function Page() {
         </div>
       </div>
       <div className="h-screen col-span-3">
-        <div className="h-[10%] w-full border border-gray-200 flex items-center justify-center gap-2 bg-gray-900">
+        <div className="h-[10%] w-full border-b border-gray-800 flex items-center justify-center gap-2 bg-black">
           <img
             className="h-10 w-10 rounded-full border border-gray-500"
             src={currChat.img_url}
@@ -198,7 +196,7 @@ export default function Page() {
           />
           <h1 className="text-white">{currChat.name}</h1>
         </div>
-        <div className="h-[80%] p-2 overflow-y-auto bg-gray-900">
+        <div className="h-[80%] p-2 overflow-y-auto bg-black">
           {chat.messages.map((msg) => {
             return (
               <Message
@@ -209,13 +207,13 @@ export default function Page() {
             );
           })}
         </div>
-        <div className="h-[10%] flex gap-2 justify-center border py-2 bg-gray-800">
+        <div className="h-[10%] flex gap-2 justify-center border-gray-800 py-2 bg-black">
           <input
-            className="border border-gray-200 rounded-lg px-2 py-1 w-1/2 bg-gray-700 text-white"
+            className="border-b border-gray-800 rounded-lg px-2 py-1 w-1/2 bg-black text-white"
             type="text"
             placeholder="Enter your message here"
           />
-          <button className="bg-blue-500 text-white rounded-lg py-1 px-2 hover:bg-blue-600 focus:outline-none">
+          <button className="bg-white text-black rounded-lg py-1 px-2 hover:bg-gray-800 focus:outline-none">
             Send
           </button>
         </div>
@@ -223,4 +221,3 @@ export default function Page() {
     </div>
   );
 }
-
