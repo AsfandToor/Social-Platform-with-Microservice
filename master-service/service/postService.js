@@ -9,6 +9,11 @@ const getPosts = async (page, limit) => {
   return response.data
 }
 
+const getPostById = async (postId) => {
+  const response = await axios.get(`${BASE_URL}/post/${postId}`)
+  return response.data
+}
+
 const uploadImage = async (files) => {
   const formData = new FormData()
   files.forEach((file, index) => {
@@ -49,4 +54,4 @@ const deletePost = async (postId) => {
   return response.data
 }
 
-module.exports = { createPost, createComment, uploadImage, getPosts, updatePost, deletePost }
+module.exports = { createPost, createComment, uploadImage, getPosts, getPostById, updatePost, deletePost }

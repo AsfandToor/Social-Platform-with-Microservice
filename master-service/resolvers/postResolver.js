@@ -1,9 +1,13 @@
-const { createPost, createComment, getPosts, updatePost, deletePost } = require('../service/postService')
+const { createPost, createComment, getPosts, getPostById, updatePost, deletePost } = require('../service/postService')
 
 const postResolver = {
   Query: {
     getPosts: async (_, { page, limit }) => {
       const response = await getPosts(page, limit)
+      return response
+    },
+    getPostById: async (_, { postId }) => {
+      const response = await getPostById(postId)
       return response
     }
   },
