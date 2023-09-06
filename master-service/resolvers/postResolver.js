@@ -1,4 +1,4 @@
-const { createPost, getPosts, updatePost, deletePost } = require('../service/postService')
+const { createPost, createComment, getPosts, updatePost, deletePost } = require('../service/postService')
 
 const postResolver = {
   Query: {
@@ -10,6 +10,9 @@ const postResolver = {
   Mutation: {
     createPost: async (_, { createPostInput }) => {
       return await createPost(createPostInput)
+    },
+    createComment: async (_, { createCommentInput }) => {
+      return await createComment(createCommentInput)
     },
     updatePost: async (_, { postId, updatePostInput }) => {
       return await updatePost(postId, updatePostInput)

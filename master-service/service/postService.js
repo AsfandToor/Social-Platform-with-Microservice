@@ -34,6 +34,11 @@ const createPost = async (createPostInput) => {
   return response.data
 }
 
+const createComment = async (createCommentInput) => {
+  const response = await axios.post(`${BASE_URL}/comment`, { ...createCommentInput })
+  return response.data
+}
+
 const updatePost = async (postId, updatePostInput) => {
   const response = await axios.put(`${BASE_URL}/post/${postId}`, { ...updatePostInput })
   return response.data
@@ -44,4 +49,4 @@ const deletePost = async (postId) => {
   return response.data
 }
 
-module.exports = { createPost, uploadImage, getPosts, updatePost, deletePost }
+module.exports = { createPost, createComment, uploadImage, getPosts, updatePost, deletePost }

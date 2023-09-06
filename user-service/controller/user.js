@@ -5,6 +5,7 @@ const Repository = new UserRepository()
 
 export class UserController {
   getAllUsers = async (req, res, next) => {
+    console.log(`Request Made GetAll`)
     const response = await Repository.getAllUsers()
     res.send(response)
   }
