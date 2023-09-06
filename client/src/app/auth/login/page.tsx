@@ -1,37 +1,48 @@
-"use client"
+"use client";
 
 import React, { useState } from "react";
 
 export default function LoginPage() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [form, setForm] = useState({
+    username: "",
+    password: ""
+  })
 
+  const [error, setError] = useState("");
+ 
   const handleLogin = () => {
-    // TODO
+    if (!form.username || !form.password) {
+      setError("All fields are required*");
+      return;
+    }
   };
 
   return (
-    <div className="flex h-screen justify-center items-center bg-black text-white">
+    <div className="flex flex-col h-screen justify-center items-center bg-black text-white">
       <div className="bg-gray-800 p-8 rounded-lg shadow-lg w-96">
         <h2 className="text-3xl font-semibold text-gray-200 mb-4">Login</h2>
         <div className="mb-4">
           <label className="block text-gray-400 font-semibold">Username</label>
           <input
             type="text"
-            className="border border-gray-600 rounded-lg px-3 py-2 w-full focus:outline-none focus:border-blue-500"
+            className="border text-gray-600 border-gray-600 rounded-lg px-3 py-2 w-full focus:outline-none focus:border-blue-500"
             placeholder="Enter your username"
-            value={username}
-            onChange={(e)=>{setUsername(e.target.value);}}
+            value={form.username}
+            onChange={(e) => {
+              setForm({...form, username:e.target.value});
+            }}
           />
         </div>
         <div className="mb-6">
           <label className="block text-gray-400 font-semibold">Password</label>
           <input
             type="password"
-            className="border border-gray-600 rounded-lg px-3 py-2 w-full focus:outline-none focus:border-blue-500"
+            className="border text-gray-600 border-gray-600 rounded-lg px-3 py-2 w-full focus:outline-none focus:border-blue-500"
             placeholder="Enter your password"
-            value={password}
-            onChange={(e)=>{setPassword(e.target.value);}}
+            value={form.password}
+            onChange={(e) => {
+              setForm({...form, password:e.target.value});
+            }}
           />
         </div>
         <button
@@ -40,6 +51,15 @@ export default function LoginPage() {
         >
           Login
         </button>
+        <p className="mt-4 text-sm">
+          Don't have an account?{" "}
+          <span className="text-sm underline cursor-pointer">Register</span>
+        </p>
+        {error && (
+          <div className="mt-2 p-2 bg-red-100 border border-red-600 rounded w-fit">
+            <p className="text-red-600 text-xs italic">{error}</p>
+          </div>
+        )}
       </div>
     </div>
   );
