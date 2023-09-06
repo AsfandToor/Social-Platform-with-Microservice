@@ -6,6 +6,7 @@ const scriptPrefix = useYarn ? 'yarn' : 'npm';
 const scripts = [
   'dev:client',
   'dev:master',
+  'dev:user',
   'dev:post',
   'dev:chat',
 ];

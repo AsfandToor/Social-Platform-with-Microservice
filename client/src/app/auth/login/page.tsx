@@ -1,20 +1,27 @@
 "use client";
 
 import React, { useState } from "react";
+import { signIn } from "next-auth/react";
 
 export default function LoginPage() {
   const [form, setForm] = useState({
-    username: "",
+    email: "",
     password: ""
   })
 
   const [error, setError] = useState("");
  
-  const handleLogin = () => {
-    if (!form.username || !form.password) {
+  const handleLogin = async () => {
+    if (!form.email || !form.password) {
       setError("All fields are required*");
       return;
     }
+
+    const data = await signIn("credentials", {
+      email: form.email,
+      password: form.password,
+      redirect: false
+    })
   };
 
   return (
@@ -22,14 +29,14 @@ export default function LoginPage() {
       <div className="bg-gray-800 p-8 rounded-lg shadow-lg w-96">
         <h2 className="text-3xl font-semibold text-gray-200 mb-4">Login</h2>
         <div className="mb-4">
-          <label className="block text-gray-400 font-semibold">Username</label>
+          <label className="block text-gray-400 font-semibold">Email</label>
           <input
             type="text"
             className="border text-gray-600 border-gray-600 rounded-lg px-3 py-2 w-full focus:outline-none focus:border-blue-500"
-            placeholder="Enter your username"
-            value={form.username}
+            placeholder="Enter your email"
+            value={form.email}
             onChange={(e) => {
-              setForm({...form, username:e.target.value});
+              setForm({...form, email:e.target.value});
             }}
           />
         </div>
@@ -52,7 +59,7 @@ export default function LoginPage() {
           Login
         </button>
         <p className="mt-4 text-sm">
-          Don't have an account?{" "}
+          Don&apos;t have an account?{" "}
           <span className="text-sm underline cursor-pointer">Register</span>
         </p>
         {error && (

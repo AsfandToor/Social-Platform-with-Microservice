@@ -17,9 +17,19 @@ import Skeleton from "./components/skeleton";
 
 import { PagiantedPosts, Post } from "@/app/types/post";
 
+const LIMIT = "5"
+
 const Page = () => {
   const [seen, setSeen] = useAtom(Seen);
-  const [posts, setPosts] = useState<PagiantedPosts>();
+  const [posts, setPosts] = useState<PagiantedPosts>({
+    docs: [],
+    limit: 0,
+    page: 0,
+    totalDocs: 0,
+    totalPages: 0,
+    hasNextPage: false,
+    hasPrevPage: false,
+  });
   const [loadPosts, { data, called, loading, error }] = useLazyQuery(
     GET_POSTS,
     {
@@ -32,7 +42,7 @@ const Page = () => {
   useEffect(() => {
     loadPosts({
       variables: {
-        limit: "2",
+        limit: LIMIT,
         page: "1",
       },
       onCompleted: (data) => {
@@ -44,23 +54,25 @@ const Page = () => {
   return (
     <div className="flex w-full ">
       <div className="hidden xl:block">
-        <SideNav></SideNav>
+        <SideNav />
       </div>
-      <BottomNav></BottomNav>
+      <BottomNav />
       <div className="w-[100%] xl:w-[85%]  ">
         {seen ? <CreatePost></CreatePost> : null}
         {!called || loading ? (
-          <div className="flex flex-col items-center mt-11">
+          <div className="flex flex-col gap-y-20 items-center mt-11">
+            <Skeleton />
+            <Skeleton />
             <Skeleton />
           </div>
         ) : (
           <InfiniteScroll
             className="flex flex-col items-center mt-11"
-            dataLength={posts?.docs.length || 0}
+            dataLength={posts!.docs.length}
             next={async () => {
               const response = await loadPosts({
                 variables: {
-                  limit: "2",
+                  limit: LIMIT,
                   page: ((posts?.page || 0) + 1).toString(),
                 },
               });
@@ -76,7 +88,7 @@ const Page = () => {
               })
             }}
             hasMore={posts?.hasNextPage || false}
-            loader={<Skeleton />}
+            loader={<div>Loading</div>}
             endMessage={
               <p style={{ textAlign: "center" }}>
                 <b>Yay! You have seen it all</b>
