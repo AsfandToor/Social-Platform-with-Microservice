@@ -29,6 +29,16 @@ export class PostService {
     }
   }
 
+  async fetchById(id: string) {
+    try {
+      const response = await this.postModel.findById(id).populate('comments');
+      return response;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
+
   async create(dto: CreatePostDto) {
     try {
       const response = await this.postModel.create({
