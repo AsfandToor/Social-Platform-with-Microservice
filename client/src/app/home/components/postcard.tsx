@@ -6,7 +6,7 @@ const Postcard = (props: any) => {
     <div className="flex flex-col w-[470px] mb-[50px] border-t border-[#757575] h-fit">
       <div className="text-white text-l font-bold py-3">{props.user}</div>
       <img
-        className="w-[470px] h-[350px] object-cover mb-3 bg-white"
+        className="w-[470px] h-[350px] object-contain mb-3 bg-black border-y py-3 border-[#757575]"
         src={props.img}
       />
       <div className="text-white text-l ">{props.likes} likes</div>
