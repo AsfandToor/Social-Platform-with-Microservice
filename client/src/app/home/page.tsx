@@ -60,14 +60,14 @@ const Page = () => {
       <div className="w-[100%] xl:w-[85%]  ">
         {seen ? <CreatePost></CreatePost> : null}
         {!called || loading ? (
-          <div className="flex flex-col gap-y-20 items-center mt-11">
+          <div className="flex flex-col gap-y-20 items-center mt-11 ml-[14.5%]">
             <Skeleton />
             <Skeleton />
             <Skeleton />
           </div>
         ) : (
           <InfiniteScroll
-            className="flex flex-col items-center mt-11"
+            className="flex flex-col items-center mt-11 ml-[14.5%]"
             dataLength={posts!.docs.length}
             next={async () => {
               const response = await loadPosts({
@@ -85,7 +85,7 @@ const Page = () => {
                 totalPages: newPosts.totalPages,
                 hasNextPage: newPosts.hasNextPage,
                 hasPrevPage: newPosts.hasPrevPage,
-              })
+              });
             }}
             hasMore={posts?.hasNextPage || false}
             loader={<div>Loading</div>}
@@ -107,7 +107,6 @@ const Page = () => {
             ))}
           </InfiniteScroll>
         )}
-        
       </div>
     </div>
   );
