@@ -65,6 +65,12 @@ input CreatePostInput {
     images: [String]
 }
 
+input CreateCommentInput {
+    comment: String
+    author: String
+    post: ID
+}
+
 input UpdatePostInput {
     caption: String
 }
@@ -79,6 +85,7 @@ type Mutation {
     createChat(createChatInput: CreateChatInput!): Boolean
     createMessage(createMessageInput: CreateMessageInput!): Boolean
     createPost(createPostInput: CreatePostInput): Post
+    createComment(createCommentInput: CreateCommentInput): Comment
     updateChat(chatId: ID!, name: String!): Boolean 
     updateMessage(messageId: ID!, message: String!): Boolean
     updatePost(postId: ID!, updatePostInput: UpdatePostInput!): Post

@@ -13,7 +13,7 @@ export class AuthController {
       id: response._id
     }, process.env.JWT_SECRET, { expiresIn: '1d' })
     res.send({
-      id: response._id,
+      _id: response._id,
       email: response.email,
       name: response.name,
       username: response.username,
