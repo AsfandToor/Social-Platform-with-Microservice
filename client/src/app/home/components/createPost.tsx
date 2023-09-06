@@ -9,48 +9,48 @@ import apolloClient from "@/app/graphql/client";
 
 const CreatePost = () => {
   const [imageUrl, setImageUrl] = useState("");
+  const [caption, setCaption] = useState("");
+  const [author, setAuthor] = useState("");
+  const [image, setImage] = useState("");
+
+  const [createPost] = useMutation(Create_Post_Mutation, {
+    client: apolloClient,
+    onCompleted: (data) => {
+      console.log(data);
+    },
+  });
+
   const handleImageChange = (e: {
     target: { files: (Blob | MediaSource)[] };
   }) => {
     if (e.target.files[0]) {
-      setImageUrl(URL.createObjectURL(e.target.files[0]));
-      console.log(imageUrl);
+      console.log("hello");
+      let image = URL.createObjectURL(e.target.files[0]);
+      setImageUrl(image);
+      const reader = new FileReader();
+      reader.onload = function () {
+        const base64String = reader.result.split(",")[1];
+        setImage(base64String);
+        console.log(base64String);
+      };
+      reader.readAsDataURL(e.target.files[0]);
     }
   };
 
-  
-  
-const handleCreatePost = () => {
-  
-
-  // const [createPost] = useMutation(CREATE_POST_MUTATION, {
-  //   client: apolloClient,
-  //   onCompleted: (data) => {
-  //     console.log(data);
-  //   }
-  // });
-  //  createPost({
-  //       variables: {
-  //         createPostInput: {
-  //           caption: 'Your caption here',
-  //           author: 'Author name',
-  //           imageData: "base64String", // Include the base64-encoded image data
-  //         },
-  //       },
-  //     })
-  //       .then((response) => {
-  //         console.log('Post created successfully:', response);
-  //         // Handle success or update UI as needed
-  //       })
-  //       .catch((error) => {
-  //         console.error('Error creating post:', error);
-  //         // Handle error or display an error message
-  //       });
+  const handleCreatePost = () => {
     
+    const jsonObject = {
+      caption,
+      images: [image],
+    };
+
+    createPost({
+      variables: {
+        createPostInput: jsonObject,
+      },
+    });
+    console.log(jsonObject)
   };
-
-
-
 
   const [seen, setSeen] = useAtom(Seen);
   const togglePop = () => {
@@ -126,6 +126,7 @@ const handleCreatePost = () => {
               id="floating_outlined"
               className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
               placeholder=" "
+              onChange={(e) => setCaption(e.target.value)}
             />
             <label
               htmlFor="floating_outlined"
@@ -141,15 +142,17 @@ const handleCreatePost = () => {
             >
               Cancel
             </div>
-            <div className=" p-2 lg:p-5 bg-blue-500 rounded-xl" onClick={handleCreatePost}>
+            <div
+              className=" p-2 lg:p-5 bg-blue-500 rounded-xl"
+              onClick={handleCreatePost}
+            >
               Create Post
             </div>
           </div>
         </div>
       </div>
     </div>
-);
-  
+  );
 };
 
 export default CreatePost;
