@@ -6,25 +6,28 @@ import Image from "next/image";
 import placeholderImage from "../../assets/user-placeholder.png";
 
 export default function LoginPage() {
-  const [name, setName] = useState("");
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [image, setImage] = useState(placeholderImage); // Initialize with the placeholder image
-  const [password, setPassword] = useState("");
+  const [form, setForm] = useState({
+    name: "",
+    username: "",
+    email:"",
+    image: placeholderImage,
+    password: ""
+  })
+
   const [error, setError] = useState("");
 
   const handleRegister = () => {
-    if (!username || !password || !email || !password) {
+    if (!form.username || !form.password || !form.email || !form.name) {
       setError("All fields are required*");
       return;
     }
   };
-
+  
   const handleImageChange = (e) => {
     const selectedImage = e.target.files[0];
     if (selectedImage) {
       const imageUrl = URL.createObjectURL(selectedImage);
-      setImage(imageUrl);
+      setForm({...form, image:imageUrl});
     }
   };
 
@@ -35,7 +38,7 @@ export default function LoginPage() {
         <div className="relative w-fit m-auto">
           <label htmlFor="imageInput" className="cursor-pointer">
             <Image
-              src={image}
+              src={form.image}
               alt="Your Image Alt Text"
               width={56}
               height={56}
@@ -57,9 +60,9 @@ export default function LoginPage() {
             type="text"
             className="border text-gray-600 border-gray-600 rounded-lg px-3 py-2 w-full focus:outline-none focus:border-blue-500"
             placeholder="Enter your full name"
-            value={name}
+            value={form.name}
             onChange={(e) => {
-              setName(e.target.value);
+              setForm({...form, name:e.target.value});
             }}
           />
         </div>
@@ -69,9 +72,9 @@ export default function LoginPage() {
             type="text"
             className="border text-gray-600 border-gray-600 rounded-lg px-3 py-2 w-full focus:outline-none focus:border-blue-500"
             placeholder="Enter your username"
-            value={username}
+            value={form.username}
             onChange={(e) => {
-              setUsername(e.target.value);
+              setForm({...form, username:e.target.value});
             }}
           />
         </div>
@@ -81,9 +84,9 @@ export default function LoginPage() {
             type="email"
             className="border text-gray-600 border-gray-600 rounded-lg px-3 py-2 w-full focus:outline-none focus:border-blue-500"
             placeholder="Enter your email"
-            value={email}
+            value={form.email}
             onChange={(e) => {
-              setEmail(e.target.value);
+              setForm({...form, email:e.target.value});
             }}
           />
         </div>
@@ -93,9 +96,9 @@ export default function LoginPage() {
             type="password"
             className="border text-gray-600 border-gray-600 rounded-lg px-3 py-2 w-full focus:outline-none focus:border-blue-500"
             placeholder="Enter your password"
-            value={password}
+            value={form.password}
             onChange={(e) => {
-              setPassword(e.target.value);
+              setForm({...form, password:e.target.value});
             }}
           />
         </div>

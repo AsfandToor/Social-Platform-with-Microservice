@@ -3,12 +3,15 @@
 import React, { useState } from "react";
 
 export default function LoginPage() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [form, setForm] = useState({
+    username: "",
+    password: ""
+  })
 
+  const [error, setError] = useState("");
+ 
   const handleLogin = () => {
-    if (!username || !password) {
+    if (!form.username || !form.password) {
       setError("All fields are required*");
       return;
     }
@@ -24,9 +27,9 @@ export default function LoginPage() {
             type="text"
             className="border text-gray-600 border-gray-600 rounded-lg px-3 py-2 w-full focus:outline-none focus:border-blue-500"
             placeholder="Enter your username"
-            value={username}
+            value={form.username}
             onChange={(e) => {
-              setUsername(e.target.value);
+              setForm({...form, username:e.target.value});
             }}
           />
         </div>
@@ -36,9 +39,9 @@ export default function LoginPage() {
             type="password"
             className="border text-gray-600 border-gray-600 rounded-lg px-3 py-2 w-full focus:outline-none focus:border-blue-500"
             placeholder="Enter your password"
-            value={password}
+            value={form.password}
             onChange={(e) => {
-              setPassword(e.target.value);
+              setForm({...form, password:e.target.value});
             }}
           />
         </div>
@@ -50,7 +53,7 @@ export default function LoginPage() {
         </button>
         <p className="mt-4 text-sm">
           Don't have an account?{" "}
-          <span className="text-sm underline cursor-pointer">Sign Up</span>
+          <span className="text-sm underline cursor-pointer">Register</span>
         </p>
         {error && (
           <div className="mt-2 p-2 bg-red-100 border border-red-600 rounded w-fit">
