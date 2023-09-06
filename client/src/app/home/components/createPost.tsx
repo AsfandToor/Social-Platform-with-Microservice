@@ -13,7 +13,9 @@ const CreatePost = () => {
   const [author, setAuthor] = useState("");
   const [image, setImage] = useState("");
 
+
   const [loader, setLoader] = useState(false);
+  const [fill, setFill] = useState(true);
   
 
   const [createPost] = useMutation(Create_Post_Mutation, {
@@ -42,7 +44,7 @@ const CreatePost = () => {
 
   const handleCreatePost = () => {
     if (imageUrl == "" || caption == "") {
-      alert("Please fill all the fields");
+      setFill(false);
       return;
     }
     const jsonObject = {
@@ -68,6 +70,7 @@ const CreatePost = () => {
   const togglePop = () => {
     setSeen(!seen);
     setLoader(false);
+    setFill(true);
   };
 
   return (
@@ -114,6 +117,7 @@ const CreatePost = () => {
               className="hidden"
               accept="image/*"
               onChange={handleImageChange}
+              required
             />
           </label>
           <div
@@ -139,7 +143,7 @@ const CreatePost = () => {
               id="floating_outlined"
               className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-white bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
               placeholder=" "
-              onChange={(e) => setCaption(e.target.value)}
+              onChange={(e) => setCaption(e.target.value)} required
             />
             <label
               htmlFor="floating_outlined"
@@ -155,8 +159,19 @@ const CreatePost = () => {
             >
               Cancel
             </div>
+            <div className="flex h-full  justify-center content-center">
+              <div className={!fill?"text-red-500 h-fit":"hidden"}>
+                Please fill all the fields to create a post
+              </div>
+           
+
+            </div>
             <div
-              className={!loader? " p-2 lg:p-5 bg-blue-500 rounded-xl hover:bg-blue-700 focus:ring-blue-800":"hidden"}
+              className={
+                !loader
+                  ? " p-2 lg:p-5 bg-blue-500 rounded-xl hover:bg-blue-700 focus:ring-blue-800"
+                  : "hidden"
+              }
               onClick={handleCreatePost}
             >
               Create Post
@@ -164,7 +179,11 @@ const CreatePost = () => {
             <button
               disabled
               type="button"
-              className={loader? "text-white bg-blue-500  focus:ring-4 focus:outline-none  font-medium rounded-xl text-sm p-2 lg:p-5  text-center mr-2 dark:bg-blue-500 hover:bg-blue-700 focus:ring-blue-800 inline-flex items-center":"hidden"}
+              className={
+                loader
+                  ? "text-white bg-blue-500  focus:ring-4 focus:outline-none  font-medium rounded-xl text-sm p-2 lg:p-5  text-center mr-2 dark:bg-blue-500 hover:bg-blue-700 focus:ring-blue-800 inline-flex items-center"
+                  : "hidden"
+              }
             >
               <svg
                 aria-hidden="true"
