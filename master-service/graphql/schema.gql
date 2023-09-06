@@ -39,6 +39,14 @@ type Post {
     updatedAt: String
 }
 
+type User {
+    _id: ID
+    name: String
+    username: String
+    email: String
+    token: String
+}
+
 type PostWithPagination {
     docs: [Post]
     totalDocs: Int
@@ -65,6 +73,19 @@ input CreatePostInput {
     images: [String]
 }
 
+input CreateCommentInput {
+    comment: String
+    author: String
+    post: ID
+}
+
+input CreateUserInput {
+    name: String
+    username: String
+    email: String
+    password: String
+}
+
 input UpdatePostInput {
     caption: String
 }
@@ -73,12 +94,17 @@ type Query {
     getChatById(id: ID!): Chat
     getAllChats(userId: ID!): [Chat]
     getPosts(page: String!, limit: String!): PostWithPagination
+    getPostById(postId: ID!): Post
+    getAllUsers: [User]
 }
 
 type Mutation {
+    login(email: String!, password: String!): User
+    register(createUserInput: CreateUserInput!): User
     createChat(createChatInput: CreateChatInput!): Boolean
     createMessage(createMessageInput: CreateMessageInput!): Boolean
     createPost(createPostInput: CreatePostInput): Post
+    createComment(createCommentInput: CreateCommentInput): Comment
     updateChat(chatId: ID!, name: String!): Boolean 
     updateMessage(messageId: ID!, message: String!): Boolean
     updatePost(postId: ID!, updatePostInput: UpdatePostInput!): Post

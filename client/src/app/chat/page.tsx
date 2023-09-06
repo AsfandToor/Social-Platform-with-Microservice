@@ -1,11 +1,10 @@
-"use client"
+"use client";
 
 import { useState } from "react";
-import Message from "./components/Message"
-import SingleChatDisplay from "./components/SingleChatDisplay"
+import Message from "./components/Message";
+import SingleChatDisplay from "./components/SingleChatDisplay";
 
 export default function Page() {
-  
   const data = [{
     "id": 1,
     "username": "gstebbing0",
@@ -51,7 +50,7 @@ export default function Page() {
   const current_uid = "user-1";
   const [currChat, setCurrChat] = useState({
     name: "gstebbing0",
-    img_url: "https://robohash.org/officiisestquidem.png?size=50x50&set=set1"
+    img_url: "https://robohash.org/officiisestquidem.png?size=50x50&set=set1",
   });
 
   const chat = {
@@ -159,49 +158,66 @@ export default function Page() {
       }
     ]
   }
-  
-  
+
   const HandleOnChatClick = (id: number) => {
     const clickedUser = data.find((user) => user.id === id);
 
     if (clickedUser) {
       setCurrChat({
         name: clickedUser.username,
-        img_url: clickedUser.img_url
+        img_url: clickedUser.img_url,
       });
     }
-  }
+  };
 
-  
   return (
-    <div className="grid grid-cols-4 text-center bg-white">
-      <div className="h-screen col-span-1 border-2 overflow-y-auto">
-        <h1 className="text-2xl mt-2">Messages</h1>
+    <div className="grid grid-cols-4 text-center bg-black text-white min-h-screen">
+      <div className="h-screen col-span-1 border-b border-gray-400 overflow-y-auto bg-black">
+        <h1 className="text-2xl mt-2 border-b border-gray-600 py-2">Messages</h1>
         <div className="p-2">
-          {data.map((elem)=>{
-             return (
-              <SingleChatDisplay key={elem.id} img_url={elem.img_url} name={elem.username} onClick={() => HandleOnChatClick(elem.id)}/>
-             )
+          {data.map((elem) => {
+            return (
+              <SingleChatDisplay
+                key={elem.id}
+                img_url={elem.img_url}
+                name={elem.username}
+                onClick={() => HandleOnChatClick(elem.id)}
+              />
+            );
           })}
         </div>
       </div>
-      <div className="h-screen col-span-3 border-2">
-        <div className="h-[10%] w-full border-b-2 flex items-center justify-center gap-2">
-          <img className="h-10 w-10 rounded-[36px] border border-gray-500" src={currChat.img_url}></img>
-          <h1>{currChat.name}</h1>
+      <div className="h-screen col-span-3">
+        <div className="h-[10%] w-full border-b border-gray-800 flex items-center justify-center gap-2 bg-black">
+          <img
+            className="h-10 w-10 rounded-full border border-gray-500"
+            src={currChat.img_url}
+            alt={currChat.name}
+          />
+          <h1 className="text-white">{currChat.name}</h1>
         </div>
-        <div className="h-[80%] p-2 overflow-y-auto">
+        <div className="h-[80%] p-2 overflow-y-auto bg-black">
           {chat.messages.map((msg) => {
             return (
-              <Message key={msg.messageId} isUserSender={msg.userId === current_uid} message = {msg.text}/>
-            )
+              <Message
+                key={msg.messageId}
+                isUserSender={msg.userId === current_uid}
+                message={msg.text}
+              />
+            );
           })}
         </div>
-        <div className="h-[10%] flex gap-2 justify-center border py-2">
-          <input className="border border-gray-200 rounded-lg px-2 py-1 w-1/2" type="text" placeholder="Enter your message here"/>
-          <button className="bg-blue-500 text-white rounded-lg py-1 px-2">Send</button>
+        <div className="h-[10%] flex gap-2 justify-center border-gray-800 py-2 bg-black">
+          <input
+            className="border-b border-gray-800 rounded-lg px-2 py-1 w-1/2 bg-black text-white"
+            type="text"
+            placeholder="Enter your message here"
+          />
+          <button className="bg-white text-black rounded-lg py-1 px-2 hover:bg-gray-800 focus:outline-none">
+            Send
+          </button>
         </div>
       </div>
     </div>
-  )
+  );
 }

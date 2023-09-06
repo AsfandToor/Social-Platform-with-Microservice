@@ -27,6 +27,11 @@ export class PostController {
     return this.postService.fetch(query);
   }
 
+  @Get(':id')
+  fetchById(@Param('id') id: string) {
+    return this.postService.fetchById(id);
+  }
+
   @Post()
   create(@Body() dto: CreatePostDto) {
     return this.postService.create(dto);
