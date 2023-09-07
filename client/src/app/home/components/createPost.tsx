@@ -6,6 +6,7 @@ import { useState } from "react";
 import { useMutation } from "@apollo/client";
 import { Create_Post_Mutation } from "@/app/graphql/mutations/post";
 import apolloClient from "@/app/graphql/client";
+import Loader from "@/app/components/Ui/loader";
 
 const CreatePost = () => {
   const [imageUrl, setImageUrl] = useState("");
@@ -13,27 +14,25 @@ const CreatePost = () => {
   const [author, setAuthor] = useState("");
   const [image, setImage] = useState("");
 
-  const [createPost] = useMutation(Create_Post_Mutation, {
+  const [createPost, { loading }] = useMutation(Create_Post_Mutation, {
     client: apolloClient,
     onCompleted: (data) => {
       console.log(data);
     },
   });
 
-  const handleImageChange = (e: {
-    target: { files: (Blob | MediaSource)[] };
-  }) => {
+  const handleImageChange = (e: any) => {
     if (e.target.files[0]) {
       console.log("hello");
       let image = URL.createObjectURL(e.target.files[0]);
       setImageUrl(image);
       const reader = new FileReader();
       reader.onload = function () {
-        const base64String = reader.result.split(",")[1];
-        setImage(base64String);
+        const base64String = reader.result! as string;
+        setImage(base64String.split(",")[1]);
         console.log(base64String);
       };
-      reader.readAsDataURL(e.target.files[0]);
+      reader.readAsDataURL(e.target.files[0] as Blob);
     }
   };
 
@@ -49,7 +48,6 @@ const CreatePost = () => {
         createPostInput: jsonObject,
       },
     });
-    console.log(jsonObject)
   };
 
   const [seen, setSeen] = useAtom(Seen);
@@ -58,7 +56,7 @@ const CreatePost = () => {
   };
 
   return (
-    <div className="fixed w-[100%] h-[100%] top-0 left-0  backdrop-blur-sm z-[10000] flex justify-center items-center ">
+    <div className="fixed w-[100%] h-[100%] top-0 left-0  backdrop-blur-sm z-[10000] flex justify-center items-center overflow-hidden">
       <div className="fixed w-[60%] h-[49rem]  left-[50%] top-[50%] translate-y-[-50%] translate-x-[-50%] border border-white bg-black overscroll-none rounded-xl">
         <div className="flex justify-between px-5 pt-5">
           <div className="text-xl font-semibold">Create Post</div>
@@ -124,31 +122,32 @@ const CreatePost = () => {
             <input
               type="text"
               id="floating_outlined"
-              className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+              className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-white bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-white focus:outline-none focus:ring-0 focus:border-white peer"
               placeholder=" "
               onChange={(e) => setCaption(e.target.value)}
             />
             <label
               htmlFor="floating_outlined"
-              className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-black dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
+              className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-black dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:white peer-focus:dark:white peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
             >
               Caption
             </label>
           </div>
           <div className="w-full flex justify-between m-5">
-            <div
-              className="p-2 lg:p-5 px-5 lg:px-10 bg-black border border-white rounded-xl text-red-500 "
+            <button
+              className="p-2 lg:p-5 px-5 lg:py-2 bg-black border border-white rounded-xl text-white"
               onClick={togglePop}
             >
               Cancel
-            </div>
-            <div
-              className=" p-2 lg:p-5 bg-blue-500 rounded-xl"
+            </button>
+            <button
+              className="px-5 bg-blue-500 rounded-xl"
               onClick={handleCreatePost}
             >
               Create Post
-            </div>
+            </button>
           </div>
+          <Loader loading={loading} className="-mt-6 rounded-xl"/>
         </div>
       </div>
     </div>
