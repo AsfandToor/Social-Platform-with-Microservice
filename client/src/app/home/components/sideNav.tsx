@@ -20,21 +20,21 @@ const SideNav = () => {
     setNav(!navBar);
   };
   return (
-    <div className=" bg-[color:var(--background-start-rgb)] h-[100%]  flex flex-col align-center w-[100%] xl:w-[15%] p-4 xl:fixed z-[10000]  border-r-[1px] border-r-white">
+    <div className=" bg-[color:var(--background-start-rgb)] h-[100%]  flex flex-col align-center w-[100%] xl:w-[17.5%] py-4 xl:fixed z-[10000]  border-r-[1px] border-[#262626] pr-10">
       <div className=" w-[100%] ">
         <h1
           className={
-            "text-[var(--header-text-color)] text-[25px] leading-[24px] font-extrabold cursor-pointer md:mt-7 xl:ml-5"
+            "text-[var(--header-text-color)] text-[25px] leading-[24px] font-semibold cursor-pointer md:mt-7 xl:ml-5"
           }
         >
           Awesome X
         </h1>
 
         <a
-          className="mt-3 md:mt-7  text-xl ml-2 p-3  rounded hover:cursor-pointer block bg-[color:var(--background-color-2)] bg-white text-black font-bold"
+          className="mt-3 md:mt-7  text-xl ml-2 p-3  rounded hover:cursor-pointer block bg-[color:var(--background-color-2)] bg-black text-white font-bold"
           onClick={setNavBar}
         >
-          <BiHomeAlt className="inline" />
+          <BiHomeAlt className="inline  text-white"  />
           <h1 className="ml-3 inline-block "> Home</h1>
         </a>
         <a
