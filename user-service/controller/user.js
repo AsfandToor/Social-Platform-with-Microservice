@@ -15,6 +15,13 @@ export class UserController {
     res.send(response)
   }
 
+  upload = async (req, res, next) => {
+    const imageUri = req.body.imageUri
+    res.send({
+      image: imageUri
+    })
+  }
+
   register = async (req, res, next) => {
     const response = await Repository.createAsync(req.body)
     res.send(response)
