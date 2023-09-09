@@ -25,6 +25,11 @@ const UserSchema = new mongoose.Schema({
   posts: {
     type: [mongoose.Schema.Types.ObjectId],
     ref: 'Post'
+  },
+  image: {
+    type: String,
+    required: [true, 'Image is required!'],
+    trim: true
   }
 })
 UserSchema.pre('save', function (next) {
