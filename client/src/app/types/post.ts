@@ -5,6 +5,10 @@ export type Post = {
     images: {
         url: String
     }[]
+    comments: [{
+        author: String
+        comment: String
+    }]
     createdAt: String
 }
 

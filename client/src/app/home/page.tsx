@@ -7,6 +7,7 @@ import { GET_POSTS } from "@/app/graphql/query/post";
 
 import { useAtom } from "jotai";
 import { Seen } from "../atoms/atoms";
+import { showComments } from "../atoms/atoms";
 
 import InfiniteScroll from "react-infinite-scroll-component";
 import SideNav from "./components/sideNav";
@@ -17,9 +18,13 @@ import Skeleton from "./components/skeleton";
 
 import { PagiantedPosts, Post } from "@/app/types/post";
 
+
 const LIMIT = "5"
 
 const Page = () => {
+
+
+  //* To show create post
   const [seen, setSeen] = useAtom(Seen);
   const [posts, setPosts] = useState<PagiantedPosts>({
     docs: [],
@@ -57,10 +62,13 @@ const Page = () => {
         <SideNav />
       </div>
       <BottomNav />
+      
+
+
       <div className="w-[100%] xl:w-[85%]  ">
         {seen ? <CreatePost></CreatePost> : null}
         {!called || loading ? (
-          <div className="flex flex-col gap-y-20 items-center mt-11 md:ml-[14.5%]">
+          <div className="flex flex-col gap-y-20 items-center mt-11 md:ml-[14.5%] z-10">
             <Skeleton />
             <Skeleton />
             <Skeleton />
@@ -98,11 +106,12 @@ const Page = () => {
             {posts?.docs.map((post: Post) => (
               <Postcard
                 key={post._id}
+                id={post._id}
                 user={"User"}
                 img={post.images?.[0]?.url || "https://picsum.photos/470/350"}
                 caption={post.caption}
                 likes={12}
-                comments={2}
+                comments={post.comments}
               />
             ))}
           </InfiniteScroll>

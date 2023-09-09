@@ -10,6 +10,10 @@ export const GET_POSTS = gql`
         images {
           url
         }
+        comments {
+        author
+        comment
+      }
         createdAt
       }
       totalDocs
