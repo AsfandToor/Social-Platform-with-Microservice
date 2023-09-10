@@ -7,8 +7,8 @@ export default withAuth(
   {
     callbacks: {
       authorized: async ({ req }) => {
-        const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET })
-        const customToken = token!.accessToken
+        // const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET })
+        // const customToken = token!.accessToken
         // Custom Auth Logic Here
         return true
       }

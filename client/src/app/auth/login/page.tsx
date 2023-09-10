@@ -2,8 +2,10 @@
 
 import React, { useState } from "react";
 import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
+  const router = useRouter();
   const [form, setForm] = useState({
     email: "",
     password: ""
@@ -60,7 +62,7 @@ export default function LoginPage() {
         </button>
         <p className="mt-4 text-sm">
           Don&apos;t have an account?{" "}
-          <span className="text-sm underline cursor-pointer">Register</span>
+          <span className="text-sm underline cursor-pointer" onClick={()=> router.replace("/auth/register")}>Register</span>
         </p>
         {error && (
           <div className="mt-2 p-2 bg-red-100 border border-red-600 rounded w-fit">

@@ -3,7 +3,7 @@
       "dev:client": "cd client && yarn run dev || npm run dev",
       "dev:master": "cd master-service && nodemon server.js",
       "dev:user": "cd user-service && nodemon server.js",
-      "dev:post": "cd post-service && yarn run start:dev || npm run start:dev",
+      "dev:post": "cd post-service && nodemon server.js",
       "dev:chat": "cd user-service && chat-service.exe",
       "dev": "node scripts.js"
     },
