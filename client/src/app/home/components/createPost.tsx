@@ -71,8 +71,10 @@ const CreatePost = () => {
   };
 
   return (
-    <div className="fixed w-[100%] h-[100%] top-0 left-0  backdrop-blur-sm z-[10000] flex justify-center items-center overflow-hidden">
-      <div className="fixed w-[60%] h-[49rem]  left-[50%] top-[50%] translate-y-[-50%] translate-x-[-50%] border border-white bg-black overscroll-none rounded-xl">
+
+    <div className="fixed w-[100%] h-[100%]  top-0 left-0  backdrop-blur-sm z-[10000] flex justify-center items-center ">
+      <div className="fixed w-[90%] sm:w-[60%] h-[80%]  border border-white bg-black overscroll-none rounded-xl flex flex-col justify-between">
+
         <div className="flex justify-between px-5 pt-5">
           <div className="text-xl font-semibold">Create Post</div>
           <div onClick={togglePop}>
@@ -80,12 +82,12 @@ const CreatePost = () => {
           </div>
         </div>
 
-        <div className="  flex items-center justify-center w-full h-[700px] flex-col p-5 bg-black">
+        <div className="  flex items-center justify-between w-full h-[70%] xl:h-[700px] flex-col p-5 bg-black rounded-3xl ">
           <label
             htmlFor="dropzone-file"
-            className="flex flex-col items-center justify-center w-full  border-2 border-gray-300 border-dashed rounded-lg cursor-pointer dark:hover:bg-[#fefefe]  hover:bg-[#272727] h-[600px] m-5 bg-black"
+            className="flex flex-col items-center justify-center w-full  border-2 border-gray-300 border-dashed rounded-xl cursor-pointer dark:hover:bg-[#fefefe]  hover:bg-[#272727] h-[80%] xl:h-[500px] xl:m-5 bg-black"
           >
-            <div className="flex flex-col items-center justify-center pt-5 pb-6 ">
+            <div className="flex flex-col items-center justify-center m-5 m-6 ">
               <svg
                 className="w-8 h-8 mb-4 text-gray-500 "
                 aria-hidden="true"
@@ -138,9 +140,12 @@ const CreatePost = () => {
             <input
               type="text"
               id="floating_outlined"
-              className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-white bg-transparent rounded-lg border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-white focus:outline-none focus:ring-0 focus:border-white peer"
+
+              className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-white bg-transparent rounded-xl border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+
               placeholder=" "
-              onChange={(e) => setCaption(e.target.value)} required
+              onChange={(e) => setCaption(e.target.value)}
+              required
             />
             <label
               htmlFor="floating_outlined"
@@ -149,22 +154,28 @@ const CreatePost = () => {
               Caption
             </label>
           </div>
-          <div className="w-full flex justify-between m-5">
-            <button
-              className="p-2 lg:p-5 px-5 lg:py-2 bg-black border border-white rounded-xl text-white"
+
+          <div className="w-full flex  justify-between m-5">
+            <div
+              className="p-2 xl:p-5 px-5 xl:px-10 bg-black border border-white rounded-xl text-red-500 "
               onClick={togglePop}
             >
               Cancel
-            </button>
-            <div className="flex h-full  justify-center content-center">
-              <div className={!fill?"text-red-500 h-fit":"hidden"}>
+            </div>
+            <div className="flex h-full  justify-center items-center">
+              <div
+                className={
+                  !fill ? "text-red-500 h-fit hidden xl:block" : "hidden"
+                }
+              >
+
                 Please fill all the fields to create a post
               </div>
             </div>
             <div
               className={
                 !loader
-                  ? " p-2 lg:p-5 bg-blue-500 rounded-xl hover:bg-blue-700 focus:ring-blue-800"
+                  ? " p-2 xl:p-5 bg-blue-500 rounded-xl hover:bg-blue-700 focus:ring-blue-800"
                   : "hidden"
               }
               onClick={handleCreatePost}
@@ -176,7 +187,7 @@ const CreatePost = () => {
               type="button"
               className={
                 loader
-                  ? "text-white bg-blue-500  focus:ring-4 focus:outline-none  font-medium rounded-xl text-sm p-2 lg:p-5  text-center mr-2 dark:bg-blue-500 hover:bg-blue-700 focus:ring-blue-800 inline-flex items-center"
+                  ? "text-white bg-blue-500  focus:ring-4 focus:outline-none  font-medium rounded-xl text-sm p-2 xl:p-5  text-center mr-2 dark:bg-blue-500 hover:bg-blue-700 focus:ring-blue-800 inline-flex items-center"
                   : "hidden"
               }
             >
