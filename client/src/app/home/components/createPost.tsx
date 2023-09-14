@@ -6,6 +6,7 @@ import { useState } from "react";
 import { useMutation } from "@apollo/client";
 import { Create_Post_Mutation } from "@/app/graphql/mutations/post";
 import apolloClient from "@/app/graphql/client";
+import Loader from "@/app/components/Ui/loader";
 
 const CreatePost = () => {
   const [imageUrl, setImageUrl] = useState("");
@@ -13,32 +14,29 @@ const CreatePost = () => {
   const [author, setAuthor] = useState("");
   const [image, setImage] = useState("");
 
-
   const [loader, setLoader] = useState(false);
   const [fill, setFill] = useState(true);
   
 
-  const [createPost] = useMutation(Create_Post_Mutation, {
+  const [createPost, { loading }] = useMutation(Create_Post_Mutation, {
     client: apolloClient,
     onCompleted: (data) => {
       console.log(data);
     },
   });
 
-  const handleImageChange = (e: {
-    target: { files: (Blob | MediaSource)[] };
-  }) => {
+  const handleImageChange = (e: any) => {
     if (e.target.files[0]) {
       console.log("hello");
       let image = URL.createObjectURL(e.target.files[0]);
       setImageUrl(image);
       const reader = new FileReader();
       reader.onload = function () {
-        const base64String = reader.result.split(",")[1];
-        setImage(base64String);
+        const base64String = reader.result! as string;
+        setImage(base64String.split(",")[1]);
         console.log(base64String);
       };
-      reader.readAsDataURL(e.target.files[0]);
+      reader.readAsDataURL(e.target.files[0] as Blob);
     }
   };
 
@@ -63,7 +61,6 @@ const CreatePost = () => {
       togglePop();
       window.location.reload();
     });
-    
   };
 
   const [seen, setSeen] = useAtom(Seen);
@@ -74,8 +71,10 @@ const CreatePost = () => {
   };
 
   return (
+
     <div className="fixed w-[100%] h-[100%]  top-0 left-0  backdrop-blur-sm z-[10000] flex justify-center items-center ">
       <div className="fixed w-[90%] sm:w-[60%] h-[80%]  border border-white bg-black overscroll-none rounded-xl flex flex-col justify-between">
+
         <div className="flex justify-between px-5 pt-5">
           <div className="text-xl font-semibold">Create Post</div>
           <div onClick={togglePop}>
@@ -141,18 +140,21 @@ const CreatePost = () => {
             <input
               type="text"
               id="floating_outlined"
+
               className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-white bg-transparent rounded-xl border-1 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+
               placeholder=" "
               onChange={(e) => setCaption(e.target.value)}
               required
             />
             <label
               htmlFor="floating_outlined"
-              className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-black dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
+              className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-black dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:white peer-focus:dark:white peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 left-1"
             >
               Caption
             </label>
           </div>
+
           <div className="w-full flex  justify-between m-5">
             <div
               className="p-2 xl:p-5 px-5 xl:px-10 bg-black border border-white rounded-xl text-red-500 "
@@ -166,6 +168,7 @@ const CreatePost = () => {
                   !fill ? "text-red-500 h-fit hidden xl:block" : "hidden"
                 }
               >
+
                 Please fill all the fields to create a post
               </div>
             </div>
@@ -208,6 +211,7 @@ const CreatePost = () => {
               Creating...
             </button>
           </div>
+          <Loader loading={loading} className="-mt-6 rounded-xl"/>
         </div>
       </div>
     </div>

@@ -172,9 +172,9 @@ export default function Page() {
 
   return (
     <div className="grid grid-cols-4 text-center bg-black text-white min-h-screen">
-      <div className="h-screen col-span-1 border-b border-gray-400 overflow-y-auto bg-black">
+      <div className="h-screen col-span-1 border-r border-white overflow-y-auto bg-black">
         <h1 className="text-2xl mt-2 border-b border-gray-600 py-2">Messages</h1>
-        <div className="p-2">
+        <div className="flex flex-col p-2 gap-y-5">
           {data.map((elem) => {
             return (
               <SingleChatDisplay
@@ -207,13 +207,13 @@ export default function Page() {
             );
           })}
         </div>
-        <div className="h-[10%] flex gap-2 justify-center border-gray-800 py-2 bg-black">
+        <div className="h-[7%] flex gap-2 border-gray-800 py-1 px-2 bg-black">
           <input
-            className="border-b border-gray-800 rounded-lg px-2 py-1 w-1/2 bg-black text-white"
+            className="flex-1 border-b border-gray-800 rounded-lg px-2 py-1 bg-black text-white"
             type="text"
             placeholder="Enter your message here"
           />
-          <button className="bg-white text-black rounded-lg py-1 px-2 hover:bg-gray-800 focus:outline-none">
+          <button className="bg-white text-black rounded-lg px-7 hover:bg-gray-300 focus:outline-none">
             Send
           </button>
         </div>

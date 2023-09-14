@@ -10,3 +10,13 @@ export const LOGIN_USER = gql`
         token
     }
 }`
+
+export const REGISTER_USER = gql`
+    mutation Mutation($createUserInput: CreateUserInput!) {
+        register(createUserInput: $createUserInput) {
+            name
+            username
+            image
+        }
+    }
+`
