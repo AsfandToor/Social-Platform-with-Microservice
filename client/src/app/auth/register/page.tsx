@@ -1,11 +1,17 @@
 "use client"
 
 import React, { useState } from "react";
+
+import { useCustomMutation } from "@/app/hooks";
+import { REGISTER_USER } from '@/app/graphql/mutations/user';
+
 import { AiFillCamera } from "react-icons/ai";
 import Image from "next/image";
 import placeholderImage from "../../assets/user-placeholder.png";
 
 export default function LoginPage() {
+  const [ register, { loading }] = useCustomMutation(REGISTER_USER)
+
   const [form, setForm] = useState({
     name: "",
     username: "",
@@ -23,11 +29,11 @@ export default function LoginPage() {
     }
   };
   
-  const handleImageChange = (e) => {
+  const handleImageChange = (e: any) => {
     const selectedImage = e.target.files[0];
     if (selectedImage) {
       const imageUrl = URL.createObjectURL(selectedImage);
-      setForm({...form, image:imageUrl});
+      setForm({...form, image: imageUrl});
     }
   };
 
