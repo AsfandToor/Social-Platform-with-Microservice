@@ -25,13 +25,11 @@ const handler = NextAuth({
             },
           });
           const { _id, ...data } = response.data.login;
-          console.log(data);
           return {
             id: _id,
             ...data,
           };
         } catch (error) {
-          console.log(error);
           return null;
         }
       },
@@ -51,7 +49,14 @@ const handler = NextAuth({
       }
       return token;
     },
+    session: (params) => {
+      const { session } = params;
+      return session;
+    }
   },
+  pages: {
+    signIn: "/auth/login",
+  }
 });
 
 export { handler as GET, handler as POST };

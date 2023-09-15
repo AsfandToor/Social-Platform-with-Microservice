@@ -1,13 +1,14 @@
-import React from 'react'
+import React from "react";
 import { useState } from "react";
 
-import { useAtom } from 'jotai';
-import { Seen } from '@/app/atoms/atoms';
+import { useAtom } from "jotai";
+import { Seen } from "@/app/atoms/atoms";
 
 import { BsPostcardHeart } from "react-icons/bs";
 import { BiHomeAlt } from "react-icons/bi";
 import { PiPaperPlaneTilt } from "react-icons/pi";
 import { TbLogout2 } from "react-icons/tb";
+import { signOut } from "next-auth/react";
 
 const SideNav = () => {
   const [seen, setSeen] = useAtom(Seen);
@@ -34,7 +35,7 @@ const SideNav = () => {
           className="mt-3 md:mt-7  text-xl ml-2 p-3  rounded hover:cursor-pointer block bg-[color:var(--background-color-2)] bg-black text-white font-bold"
           onClick={setNavBar}
         >
-          <BiHomeAlt className="inline  text-white"  />
+          <BiHomeAlt className="inline  text-white" />
           <h1 className="ml-3 inline-block "> Home</h1>
         </a>
         <a
@@ -50,22 +51,30 @@ const SideNav = () => {
           onClick={setNavBar}
         >
           <BsPostcardHeart className="inline" />
-          <h1 className="ml-3 inline-block" onClick={togglePop} >New Post</h1>
+          <h1 className="ml-3 inline-block" onClick={togglePop}>
+            New Post
+          </h1>
         </a>
       </div>
       <div className="absolute bottom-0">
-        <button
-          className="block text-xl font-bold text-white p-6 hover:cursor-pointer "
-        >
+        <button className="block text-xl font-bold text-white p-6 hover:cursor-pointer ">
           {" "}
           <TbLogout2 className="inline" />
-          <a className="ml-3 inline-block">Logout</a>
+          <a
+            className="ml-3 inline-block"
+            onClick={() => {
+              signOut({
+                redirect: true,
+                callbackUrl: "/auth/login",
+              });
+            }}
+          >
+            Logout
+          </a>
         </button>
       </div>
     </div>
   );
 };
 
-
-
-export default SideNav
+export default SideNav;

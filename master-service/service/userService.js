@@ -1,5 +1,6 @@
 const axios = require('axios')
 const FormData = require('form-data')
+const { GraphQLError } = require('graphql')
 require('dotenv').config()
 
 const BASE_URL = process.env.USER_SERVICE_URL
@@ -10,8 +11,17 @@ const getAllUsers = async () => {
 }
 
 const login = async (email, password) => {
-  const response = await axios.post(`${process.env.USER_SERVICE_URL}/api/auth/login`, { email, password })
-  return response.data
+  try {
+    const response = await axios.post(`${process.env.USER_SERVICE_URL}/api/auth/login`, { email, password })
+    return response.data
+  } catch (e) {
+    console.log(e)
+    throw new GraphQLError(e.response.data, {
+      extensions: {
+        code: e.response.statusText.replace(/\s/g, '_')
+      }
+    })
+  }
 }
 
 const uploadImage = async (files) => {
